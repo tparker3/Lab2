@@ -1,0 +1,21 @@
+body {
+  background: #fff773;
+}
+
+.title {
+  font-family: Dosis;
+  text-align: center;
+  
+  margin: 10px;
+}
+
+.content {
+  font-family: Dosis;
+  text-align: center;
+  background: #8f0037;
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  color:#5ccdc9;
+  
+}

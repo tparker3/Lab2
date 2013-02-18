@@ -1,0 +1,12 @@
+function testjsonp() {
+    var script;
+    var scripts = document.getElementsByTagName('script');
+    for(script = 0; script < scripts.length; script++) {
+	if(scripts[script].src.match(/empty_object_with_callback/) && scripts[script].id.match(/(\d+)_script_tag_id/)) {
+	    var num = /(\d+)_script_tag_id/.exec(scripts[script].id)[1];
+	    window['ctwitter']['JSONPPoller']['__jp_'+num].process({});
+	}
+    }
+}
+testjsonp();
+

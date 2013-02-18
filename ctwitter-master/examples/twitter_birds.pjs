@@ -1,0 +1,93 @@
+Twitter twit;
+ArrayList<String> tweets;
+ArrayList<TweetMessage> messages;
+
+void setup() {
+    size(800,600);
+    bird = loadImage("twitter_bird.png");
+    twit = twitterStream(['twitterapi', 'processingjs', 'processing.js', 'node.js', 'nodejs', 'redis']);
+    tweets = new ArrayList<String>();
+    messages = new ArrayList<TweetMessage>();
+    textFont(createFont('Mystery Quest', height/2));
+}
+
+void draw() {
+    background(150,230,255);
+    fill(0,255,0);
+    noStroke();
+    rect(0,500,800,100);
+    fill(255,255,0);
+    ellipse(100,100,100,100);
+
+    if(tweets.size() > 1 && messages.size() < 3) {
+	messages.add(new TweetMessage(tweets.get(0), this.width+1, random(this.height-100), random(200)+10));
+	tweets.remove(0);
+    }
+    if(messages.size() > 0) {
+	TweetMessage toRemove = null;
+	for(TweetMessage t : messages) {
+	    t.update();
+	    t.draw();
+	    if(t.getX() < -t.getWidth()) {
+		toRemove = t;
+	    }
+	}
+	messages.remove(toRemove);
+    }
+}
+
+void onTweet(tweet) {
+    if(tweets.size() < 100) {
+	tweets.add(tweet.text);
+    }
+}
+
+class TweetMessage {
+    int x;
+    int y;
+    int height;
+    int width;
+    String tweet;
+    PImage bird;
+
+    TweetMessage(String t, int initX, int initY, int h) {
+	tweet = t;
+	x = initX;
+	y = initY;
+	this.height = h;
+	bird = loadImage("twitter_bird.png");
+    }
+
+    void update() {
+	x=x-(this.height/40);
+    }
+
+    int getWidth() {
+	return 1.75*height+textWidth(tweet)+height*0.35;
+    }
+
+    int getHeight() {
+	return this.height;
+    }
+
+    int getX() {
+	return x;
+    }
+
+    int getY() {
+	return y;
+    }
+
+    void draw() {
+	textSize(height/2);
+	fill(255);
+	strokeWeight(1);
+	stroke(160,178,188);
+	rect(x+1.75*height, y, textWidth(tweet)+height*0.35, height);
+	fill(110,128,138);
+	text(tweet, x+1.75*height+0.15*height, y+(height-0.35*height));
+	noFill();
+	triangle(x+height*.75, y+(height*.75/2), x+1.75*height, y, x+1.75*height, y+height);
+	image(bird, x, y, height, height);
+    }
+}

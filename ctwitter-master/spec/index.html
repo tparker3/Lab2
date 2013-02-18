@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner: Jasmine Core</title>
+
+  <link rel="shortcut icon" type="image/png" href="../images/jasmine_favicon.png">
+
+  <link href="jasmine-1.1.0/jasmine.css" rel="stylesheet"/>
+  <script type="text/javascript" src="jasmine-1.1.0/jasmine.js"></script>
+  <script type="text/javascript" src="jasmine-1.1.0/jasmine-html.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="../lib/processing.js"></script>
+  <script type="text/javascript" src="../src/event_emitter.js"></script>
+  <script type="text/javascript" src="../src/jsonp_poller.js"></script>
+  <script type="text/javascript" src="../src/ctwitter.js" id="ctwitter_script"></script>
+
+  <!-- include spec files here... -->
+  <script type="text/javascript" src="event_emitter_spec.js"></script>
+  <script type="text/javascript" src="jsonp_poller_spec.js"></script>
+  <script type="text/javascript" src="ctwitter_spec.js" id="ctwitter_script"></script>
+
+  <script type="text/javascript">
+    (function() {
+	//pollute the global namespace for testing
+	EventEmitter = ctwitter.EventEmitter;
+	JSONPPoller = ctwitter.JSONPPoller;
+	CTwitter = ctwitter.CTwitter;
+	var jasmineEnv = jasmine.getEnv();
+	jasmineEnv.updateInterval = 1000;
+	
+	var trivialReporter = new jasmine.TrivialReporter();
+
+	jasmineEnv.addReporter(trivialReporter);
+	
+	jasmineEnv.specFilter = function(spec) {
+            return trivialReporter.specFilter(spec);
+	};
+
+	var currentWindowOnload = window.onload;
+
+	window.onload = function() {
+            if (currentWindowOnload) {
+		currentWindowOnload();
+            }
+            execJasmine();
+	};
+
+	function execJasmine() {
+            jasmineEnv.execute();
+	}
+
+    })();
+</script>
+
+</head>
+
+<body>
+</body>
+</html>
