@@ -17,5 +17,12 @@ body {
   margin-left: auto;
   margin-right: auto;
   color:#5ccdc9;
+
   
+}
+
+.tweets {
+  font-family: Dosis;
+  text-align: center;
+  color:#5ccdc9;
 }
